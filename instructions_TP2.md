@@ -15,6 +15,9 @@ Créez le fichier _randomsearch.py_ (en copiant _optimisation.py_), puis modifie
 * à chaque fois qu'un comportement est meilleur que les précédents, sauvegardez-le (score, valeur des paramètres et _itération_ ou il a été créé).
 * après avoir épuisé le budget d'évaluations, rejouez le meilleur comportement trouvé pendant _1000_ itérations, puis recommencez (i.e. le meilleur comportement est réévalué à l'infini).
 
+BestDist = 437.69870315948026
+BestParam = [1, 1, -1, 1, -1, 1, -1, 1]
+
 Remarques:
 * la variable _simulation_mode_ permet de régler la vitesse de la simulation au démarrage. Pratique pour faire une recherche rapide (valeur 1, voire 2).
 * pendant la simulation, la touche _d_ permet de changer la vitesse de simulation. Pratique pour observer le meilleur comportement à vitesse normale.
@@ -25,6 +28,9 @@ Remarques:
 Un inconvénient du programme précédent vient du fait que la condition initiale (position et orientation initiale) est toujours la même. Cela ne permet pas de garantir que le comportement obtenu sera efficace dans une autre situation. 
 
 En partant du programme précédent (créez un fichier _randomsearch2.py_), modifier le code afin que chaque comportement soit évalué _3_ fois, en tirant aléatoirement l'orientation initiale à chaque fois. Le score d'un comportement sera la somme de ces 3 évaluations.
+
+BestScore = 1154.3280294579806
+BestParam = [1, 1, 0, 0, -1, 1, -1, 1]
 
 Remarque: 
 * vous pouvez aussi, si vous le souhaitez, faire varier la position de départ (éviter de positionner votre robot dans un mur).

@@ -39,7 +39,7 @@ def step(robotId, sensors):
 
     # Si on détecte un mur, on l'évite.
     elif testDetectionWallFront(sensors) :
-        translation, rotation = eviter_les_murs(sensors)
+        translation, rotation = suivre_les_murs(sensors)
 
     # Si un robot adverse nous suit derrière, on s'arrête.
     elif testDetectionStalker(sensors) and not isSameTeamBack(sensors) :
@@ -47,7 +47,7 @@ def step(robotId, sensors):
 
     # On continue au hasard.
     else :
-        translation, rotation = avancer_no_opti(robotId, sensors)
+        translation, rotation = avancer_no_opti(robotId)
         
 
     # limite les valeurs de sortie entre -1 et +1
@@ -76,7 +76,6 @@ def isSameTeamBack(sensors) :
     return sensors["sensor_back"]["isSameTeam"] or sensors["sensor_back_left"]["isSameTeam"] or sensors["sensor_back_right"]["isSameTeam"]
 
 # ==============================================================================================================
-
 # Braitenberg
 
 def avancer_no_opti(sensors) :
@@ -105,8 +104,9 @@ def eviter_les_robots_adverse(sensors) :
     return translation, rotation
 
 def stopStalker(sensors) :
-    translation = (0.15) * sensors["sensor_back"]["distance_to_robot"] + (0.15) * sensors["sensor_back_left"]["distance_to_robot"] + (0.15) * sensors["sensor_back_right"]["distance_to_robot"]
+    translation = (0.1) * sensors["sensor_back"]["distance_to_robot"] + (0.1) * sensors["sensor_back_left"]["distance_to_robot"] + (0.1) * sensors["sensor_back_right"]["distance_to_robot"]
     rotation = 0
     return translation, rotation
 
 # ==============================================================================================================
+# Mécanisme pour suivre les murs
