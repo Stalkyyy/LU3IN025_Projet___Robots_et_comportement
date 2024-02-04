@@ -42,7 +42,7 @@ def step(robotId, sensors):
             translation, rotation = eviter_les_robots_ally(sensors)
 
 
-    # Si un robot adverse nous suit derrière, on s'arrête.
+    # Si un robot adverse nous suit derrière, on essaye de s'en débarasser.
     elif testDetectionStalker(sensors) and not isSameTeamBack(sensors) :
         translation, rotation = stopStalker(sensors)
 
@@ -116,32 +116,35 @@ def isSameTeamBack(sensors) :
 # Braitenberg
 
 def avancer(sensors) :
-    translation = 1
-    rotation = math.uniform(-0.20,0.20)
+    global follow_mode_and_iter
+    
+    translation = 1 * sensors["sensor_front"]["distance"]
+    rotation = random.uniform(-0.25, 0.25)
+    print(rotation)
     return translation, rotation
 
 
 def eviter_les_murs(sensors) :
     translation = 1 * sensors["sensor_front"]["distance_to_wall"]
-    rotation = (random.uniform(0,5)) * sensors["sensor_front_right"]["distance_to_wall"] + (random.uniform(-5,0)) * sensors["sensor_front_left"]["distance_to_wall"]
+    rotation = (random.uniform(1,5)) * sensors["sensor_front_right"]["distance_to_wall"] + (random.uniform(-5,-1)) * sensors["sensor_front_left"]["distance_to_wall"]
     return translation, rotation
     
     
 def aller_vers_les_robots(sensors) :
-    translation = 0.2 + 0.8 * sensors["sensor_front"]["distance_to_robot"]
+    translation = 1
     rotation = (-1) * sensors["sensor_front_right"]["distance_to_robot"] + (1) * sensors["sensor_front_left"]["distance_to_robot"]
     return translation, rotation
 
 
 def eviter_les_robots_ally(sensors) :
     translation = 1 * sensors["sensor_front"]["distance_to_robot"]
-    rotation = 1
+    rotation = (-2) + (-1) * sensors["sensor_front"]["distance_to_robot"] + (2) * sensors["sensor_front_right"]["distance_to_robot"] + (-1) * sensors["sensor_front_left"]["distance_to_robot"]
     return translation, rotation
 
 
 def stopStalker(sensors) :
-    translation = 0.1
-    rotation = 1
+    translation = 1
+    rotation = (-2) + (-1) * sensors["sensor_back"]["distance_to_robot"] + (2) * sensors["sensor_back_right"]["distance_to_robot"] + (-1) * sensors["sensor_back_left"]["distance_to_robot"]
     return translation, rotation
 
 #==============================================================================================================
@@ -149,7 +152,7 @@ def stopStalker(sensors) :
 
 def testFollowMurs(robotId : float) :
     global follow_mode_and_iter
-    return (robotId % 2 == 0) or (follow_mode_and_iter[int(robotId)] % 400 < 300)
+    return (robotId % 2 == 0 and random.choice([True, False])) or (robotId % 2 == 1 and follow_mode_and_iter[int(robotId)] % 400 < 300)
 
 def suivre_murs_droite(sensors) :
     translation = 1
