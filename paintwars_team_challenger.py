@@ -1,11 +1,12 @@
 # Projet "robotique" IA&Jeux 2021
 #
-# Binome:
-#  Prénom Nom: Enzo PINHO FERNANDES
+# Binome: 
+#  Prénom Nom: Enzo PINHO FERNANDES 
 #  Prénom Nom: Maximilien Piron-Palliser
+#
+# Groupe 4 === 2023-2024
 
 import random
-import math
 
 def get_team_name():
     return "SILKSONG PITY" # à compléter (comme vous voulez)
