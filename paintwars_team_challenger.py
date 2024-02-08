@@ -24,17 +24,19 @@ def get_extended_sensors(sensors):
 
 
 # "la mémoire autorisée d'un step à l'autre limité **un seul et unique entier** par robot."
-# Les robots pairs garde en mémoire leur sens de suivi de murs. Ils sont réinitialisés quand ils atteignent 0.
-# Les robots impairs garde en mémoire leur itération. Cela permet d'activer ou de désactiver le suivi de murs.
+#   -> Les robots pairs garde en mémoire leur sens de suivi de murs. Un nombre positif représente la droite, un nombre négatif la gauche. Le sens est réinialisé quand il tombe à 0.
+#   -> Les robots impairs garde en mémoire leur itération. Cela permet d'activer ou de désactiver le suivi de murs.
 follow_mode_and_iter : list[int] = [0,0,0,100,0,200,0,300]
 
 
+# Architecture de subsomption :
+#   avancer -> suivre murs -> stop Stalker -> aller vers/eviter les robots ennemis/alliés
 def step(robotId, sensors):
     global follow_mode_and_iter
     sensors = get_extended_sensors(sensors)
 
     if testDetectionRobotFront(sensors) :
-        # Si un robot adverse est devant nous, et qu'on est un robot assigné, on le suit. Sinon on l'évite.
+        # Si un robot adverse est devant nous, on le suit.
         if not isSameTeamFront(sensors) : 
             translation, rotation = aller_vers_les_robots(sensors) 
 
@@ -215,9 +217,9 @@ def changeModFollow(robotId : float, init : int | None = None) :
             follow_mode_and_iter[int(robotId)] = init
             
         # On incrémente ou décrémente sa valeur de suivi pour s'approcher du stade de réinitialisation.
-        else :
+        elif (follow_mode_and_iter[int(robotId)] != 0) :
             follow_mode_and_iter[int(robotId)] += 1 if follow_mode_and_iter[int(robotId)] < 0 else 1
             
-    # Si le robot est impair et qu'on initialise pas, on incrémente son itération.
-    elif init == 0 :
+    # Si le robot est impair, on incrémente son itération.
+    else :
         follow_mode_and_iter[int(robotId)] += 1
