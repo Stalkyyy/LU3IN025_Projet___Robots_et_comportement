@@ -1,5 +1,16 @@
-# SU-LU3IN025-robots
-UE LU3IN025 IA et Jeux, partie Robotique Autonome
+# SU-LU3IN025-robots : 2023-2024
+
+**Binôme :**
+- PINHO FERNANDES Enzo
+- PIRON-PALLISER Maximilien
+
+---
+
+Projet partie Robototique Autonome de l'UE LU3IN025 (IA et Jeux), lors de ma L3 Informatique à Sorbonne Université Sciences.
+
+Note : 19/20
+
+---
 
 # Pré-requis
 
